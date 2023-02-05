@@ -7,9 +7,20 @@
 using namespace std;
 int sc_main(int argc, char * argv[])
 {
+	/*signals*/
+	sc_signal <bool> reset_progcnt;
+	sc_signal <bool> increment_pc;
+	sc_signal <uint32_t> program_counter_out;
+
+	sc_clock clk("clk" ,10, SC_NS, 0.5);
 
 	CPU cpu1("core1");
-	
+	cpu1.clock(clk);
+	cpu1.reset_pc(reset_progcnt);
+	cpu1.inc_pc(increment_pc);
+	cpu1.pc_out_from_pc(program_counter_out);
+
+
 	sc_start(100,SC_NS); //start simulation for 100 nanoseconds.
 
 	return 0;
