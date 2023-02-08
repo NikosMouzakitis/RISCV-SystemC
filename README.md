@@ -4,5 +4,5 @@
   most of the base riscv instructions.
 
 
-#First version of Datapath to be tested.
+# First version of Datapath to be tested.
 ![img](https://github.com/NikosMouzakitis/RISCV-SystemC/blob/main/datapath_versions/datapath_version1.png)
