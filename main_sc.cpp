@@ -7,10 +7,17 @@
 using namespace std;
 int sc_main(int argc, char * argv[])
 {
-	/*signals*/
+
+//	driver d1("driver");
+	/* initialization*
+		signals*/
 	sc_signal <bool> reset_progcnt;
+	reset_progcnt.write(0x0);
 	sc_signal <bool> increment_pc;
+	increment_pc.write(0x1);
 	sc_signal <uint32_t> program_counter_out;
+	program_counter_out.write(0x0);
+
 
 	sc_clock clk("clk" ,10, SC_NS, 0.5);
 
