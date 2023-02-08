@@ -9,8 +9,6 @@ SC_MODULE(ProgramCounter) {
    sc_in<bool> reset;
    sc_in<bool> inc;
    sc_out<uint32_t> pc_out;
-   sc_signal<uint32_t> pc_sig;
-   int first_time = 0;
    uint32_t pc;
 
    void count() {
@@ -30,6 +28,7 @@ SC_MODULE(ProgramCounter) {
 
       sensitive << clock.pos();
       std::cout << "Program Counter module created" << endl;
+      std::cout << "PC at init time is: " << std::hex << pc << endl;
    }
 };
 

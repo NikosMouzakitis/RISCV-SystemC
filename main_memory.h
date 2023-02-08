@@ -1,6 +1,8 @@
 #include "systemc.h"
 #include <iostream>
 
+#define MEMORY_SIZE 0x1000
+
 SC_MODULE(MainMemory) {
   sc_in<bool> clk;
   sc_in<bool> rst;
@@ -10,7 +12,7 @@ SC_MODULE(MainMemory) {
   sc_in<uint32_t> address;
   sc_out<uint32_t> d_out;
 
-  uint32_t mem[0x1000];
+  uint32_t mem[MEMORY_SIZE];
 
   void do_rd() {
     if (rd) {
@@ -30,6 +32,6 @@ SC_MODULE(MainMemory) {
     SC_METHOD(do_wr);
     sensitive << clk.pos();
 
-    std::cout << "Main Memory module created" << endl;
+    std::cout << "Main Memory module 0x" << std::hex << MEMORY_SIZE <<" bytes created" << endl;
   }
 };
