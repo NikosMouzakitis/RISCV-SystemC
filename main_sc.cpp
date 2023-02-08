@@ -29,6 +29,15 @@ int sc_main(int argc, char * argv[])
 	sc_signal<uint32_t> init_address_main_mem;
 	sc_signal<uint32_t> init_data_out_main_mem;
 
+	/* register file */
+	sc_signal <sc_bv<5>> init_rf_rs1;	
+	sc_signal <sc_bv<5>> init_rf_rs2;	
+	sc_signal <sc_bv<5>> init_rf_rd;	
+	sc_signal <bool> init_rf_write;
+	sc_signal <uint32_t> init_rf_din;
+	sc_signal<uint32_t> init_rf_reg_data1;
+	sc_signal<uint32_t> init_rf_reg_data2;
+
 
 
 	/* universal clock */
@@ -49,8 +58,16 @@ int sc_main(int argc, char * argv[])
 	cpu1.data_in_main_mem(init_data_in_main_mem);
 	cpu1.address_main_mem(init_address_main_mem);
 	cpu1.data_out_main_mem(init_data_out_main_mem);
+	/*bindings for register file*/	
+	cpu1.rf_rs1(init_rf_rs1);
+	cpu1.rf_rs2(init_rf_rs2);
+	cpu1.rf_rd(init_rf_rd);
+	cpu1.rf_write(init_rf_write);
+	cpu1.rf_din(init_rf_din);
+	cpu1.rf_reg_data1(init_rf_reg_data1);
+	cpu1.rf_reg_data2(init_rf_reg_data2);
 
-	sc_start(1000,SC_NS); //start simulation for 100 nanoseconds.
+	sc_start(200,SC_NS); //start simulation for 100 nanoseconds.
 
 	return 0;
 }

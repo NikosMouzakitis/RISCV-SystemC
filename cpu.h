@@ -2,6 +2,7 @@
 #include "program_counter.h"
 #include <iostream>
 #include "main_memory.h"
+#include "register_file.h"
 
 SC_MODULE(CPU)
 {
@@ -11,11 +12,16 @@ SC_MODULE(CPU)
 	
 	ProgramCounter pc;
 	MainMemory main_mem;	
+	RegisterFile rf;
+
+//	InstructionDecoder id;
 
 	/*  Definition of the inputs for::	
 	*/	
-		// program counter
+
 	sc_in_clk clock;
+
+	// program counter
 	sc_in<bool> reset_pc;
 	sc_in<bool> inc_pc;
 	sc_out<uint32_t> pc_out_from_pc;
@@ -28,14 +34,23 @@ SC_MODULE(CPU)
 	sc_in<uint32_t> address_main_mem;
 	sc_out<uint32_t> data_out_main_mem;
 
+	//register file//	
+	sc_in <sc_bv<5>> rf_rs1;	
+	sc_in <sc_bv<5>> rf_rs2;	
+	sc_in <sc_bv<5>> rf_rd;	
+	sc_in <bool> rf_write;
+	sc_in <uint32_t> rf_din;
+	sc_out<uint32_t> rf_reg_data1;
+	sc_out<uint32_t> rf_reg_data2;
+
 
 	void debug_test(void)
 	{
-		std::cout << "PC: " << std::hex << pc_out_from_pc << endl;
+		std::cout << "[" << sc_time_stamp() << "] PC: " << std::hex << pc_out_from_pc << endl;
 
 	}
 
-	SC_CTOR(CPU) : pc("program_counter"), main_mem("main_memory")
+	SC_CTOR(CPU) : pc("program_counter"), main_mem("main_memory"), rf("register_file")
 	{
 		/*bind program counter*/
 		pc.clock(clock);
@@ -51,7 +66,17 @@ SC_MODULE(CPU)
 		main_mem.d_in(data_in_main_mem);
 		main_mem.address(address_main_mem);
 		main_mem.d_out(data_out_main_mem);
-
+	
+		/*bind register file*/
+		rf.clk(clock);
+		rf.rs1(rf_rs1);
+		rf.rs2(rf_rs2);
+		rf.rd(rf_rd);
+		rf.write(rf_write);
+		rf.din(rf_din);
+		rf.reg_data1(rf_reg_data1);
+		rf.reg_data2(rf_reg_data2);
+	
 		std::cout << "Cpu constructor" << endl;
 
 		SC_METHOD(debug_test);
