@@ -17,6 +17,7 @@ SC_MODULE(ProgramCounter) {
          pc = 0;
       } else if (inc.read() == 1) {
          pc = pc + 1;
+	 std::cout << "incrementing PC" << endl;
       }
       
       pc_out.write(pc);

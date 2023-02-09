@@ -33,16 +33,6 @@ SC_MODULE(CPU)
 	sc_in<uint32_t> data_in_main_mem;
 	sc_in<uint32_t> address_main_mem;
 	sc_out<uint32_t> data_out_main_mem;
-
-	//register file//	
-	sc_in <sc_bv<5>> rf_rs1;	
-	sc_in <sc_bv<5>> rf_rs2;	
-	sc_in <sc_bv<5>> rf_rd;	
-	sc_in <bool> rf_write;
-	sc_in <uint32_t> rf_din;
-	sc_out<uint32_t> rf_reg_data1;
-	sc_out<uint32_t> rf_reg_data2;
-
 	
 	//instruction decoder
 	
@@ -56,6 +46,16 @@ SC_MODULE(CPU)
 	sc_out<sc_bv<5>> id_inst19_15;
 	sc_out<sc_bv<5>> id_inst24_20;
 	sc_out<sc_bv<5>> id_inst11_7;
+
+	//register file//	
+	sc_in <sc_bv<5>> rf_rs1;	
+	sc_in <sc_bv<5>> rf_rs2;	
+	sc_in <sc_bv<5>> rf_rd;	
+	sc_in <bool> rf_write;
+	sc_in <uint32_t> rf_din;
+	sc_out<uint32_t> rf_reg_data1;
+	sc_out<uint32_t> rf_reg_data2;
+
 
 	void debug_test(void)
 	{
@@ -80,21 +80,9 @@ SC_MODULE(CPU)
 		main_mem.address(pc.pc_out);
 		main_mem.d_out(data_out_main_mem);
 	
-		/*bind register file*/
-		rf.clk(clock);
-		rf.rs1(rf_rs1);
-		rf.rs2(rf_rs2);
-		rf.rd(rf_rd);
-		rf.write(rf_write);
-		rf.din(rf_din);
-		rf.reg_data1(rf_reg_data1);
-		rf.reg_data2(rf_reg_data2);
-	
 		/*bind instruction decoder*/	
-		
 		id.clk(clock);
 		id.instruction(main_mem.d_out);
-		//id.instruction(id_instruction);
 		id.op2_sel(id_op2_sel);
 		id.alu_ctl(id_alu_ctl);
 		id.inst_imm(id_inst_imm);
@@ -104,6 +92,16 @@ SC_MODULE(CPU)
 		id.inst19_15(id_inst19_15);
 		id.inst24_20(id_inst24_20);
 		id.inst11_7(id_inst11_7);
+
+		/*bind register file*/
+		rf.clk(clock);
+		rf.rs1(rf_rs1);
+		rf.rs2(rf_rs2);
+		rf.rd(rf_rd);
+		rf.write(rf_write);
+		rf.din(rf_din);
+		rf.reg_data1(rf_reg_data1);
+		rf.reg_data2(rf_reg_data2);
 
 		std::cout << "Cpu constructor" << endl;
 
