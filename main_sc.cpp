@@ -41,6 +41,7 @@ int sc_main(int argc, char * argv[])
 
 
 	/* universal clock */
+	std::cout << "Set clock period: 10 nanosecods\n" << endl;
 	sc_clock clk("clk" ,10, SC_NS, 0.5);
 	/*risc-v cpu core */	
 	CPU cpu1("core1");
@@ -66,8 +67,8 @@ int sc_main(int argc, char * argv[])
 	cpu1.rf_din(init_rf_din);
 	cpu1.rf_reg_data1(init_rf_reg_data1);
 	cpu1.rf_reg_data2(init_rf_reg_data2);
-
-	sc_start(200,SC_NS); //start simulation for 100 nanoseconds.
+	std::cout << "Simulation Start" << endl;
+	sc_start(200,SC_NS); //start simulation.
 
 	return 0;
 }
