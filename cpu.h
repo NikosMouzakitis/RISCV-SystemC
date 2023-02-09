@@ -77,7 +77,7 @@ SC_MODULE(CPU)
 		main_mem.rd(read_main_mem);
 		main_mem.wr(write_main_mem);
 		main_mem.d_in(data_in_main_mem);
-		main_mem.address(address_main_mem);
+		main_mem.address(pc.pc_out);
 		main_mem.d_out(data_out_main_mem);
 	
 		/*bind register file*/
@@ -93,7 +93,8 @@ SC_MODULE(CPU)
 		/*bind instruction decoder*/	
 		
 		id.clk(clock);
-		id.instruction(id_instruction);
+		id.instruction(main_mem.d_out);
+		//id.instruction(id_instruction);
 		id.op2_sel(id_op2_sel);
 		id.alu_ctl(id_alu_ctl);
 		id.inst_imm(id_inst_imm);

@@ -16,14 +16,21 @@ SC_MODULE(MainMemory) {
 
   void do_rd() {
     if (rd) {
+	std::cout << "Main Memory read() from address: 0x" << std::hex <<  address << endl;
       d_out.write(mem[address.read()]);
     }
   }
 
   void do_wr() {
     if (wr) {
+      std::cout << "Main Memory write()" << endl;
       mem[address.read()] = d_in.read();
     }
+  }
+  void init_main_mem(void)
+  {
+	//addi   x11,x0 ,7
+	mem[0x0] = 0x0700593;
   }
 
   SC_CTOR(MainMemory) {
@@ -31,7 +38,8 @@ SC_MODULE(MainMemory) {
     sensitive << clk.pos();
     SC_METHOD(do_wr);
     sensitive << clk.pos();
-
+    init_main_mem();
     std::cout << "Main Memory module 0x" << std::hex << MEMORY_SIZE <<" bytes created" << endl;
+
   }
 };

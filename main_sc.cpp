@@ -24,7 +24,7 @@ int sc_main(int argc, char * argv[])
 	sc_signal<bool> init_write_main_mem;
 	init_write_main_mem.write(0x0);
 	sc_signal<bool> init_read_main_mem;
-	init_read_main_mem.write(0x0);
+	init_read_main_mem.write(0x1); //initial value read_main_mem is set to '1' so the execution can start fetching instructions.
 	sc_signal<uint32_t> init_data_in_main_mem;
 	sc_signal<uint32_t> init_address_main_mem;
 	sc_signal<uint32_t> init_data_out_main_mem;
@@ -97,7 +97,7 @@ int sc_main(int argc, char * argv[])
 	
 
 
-	sc_start(30,SC_NS); //start simulation.
+	sc_start(20,SC_NS); //start simulation.
 
 	return 0;
 }
