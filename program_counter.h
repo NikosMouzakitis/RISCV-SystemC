@@ -20,6 +20,7 @@ SC_MODULE(ProgramCounter) {
       }
       
       pc_out.write(pc);
+
    }
 
    SC_CTOR(ProgramCounter) {

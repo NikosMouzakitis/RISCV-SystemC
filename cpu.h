@@ -3,6 +3,7 @@
 #include <iostream>
 #include "main_memory.h"
 #include "register_file.h"
+#include "instruction_decoder.h"
 
 SC_MODULE(CPU)
 {
@@ -13,8 +14,7 @@ SC_MODULE(CPU)
 	ProgramCounter pc;
 	MainMemory main_mem;	
 	RegisterFile rf;
-
-//	InstructionDecoder id;
+	InstructionDecoder id;
 
 	/*  Definition of the inputs for::	
 	*/	
@@ -43,6 +43,19 @@ SC_MODULE(CPU)
 	sc_out<uint32_t> rf_reg_data1;
 	sc_out<uint32_t> rf_reg_data2;
 
+	
+	//instruction decoder
+	
+	sc_in<uint32_t> id_instruction;
+	sc_out<bool> id_op2_sel;
+	sc_out<sc_bv<10>> id_alu_ctl;
+	sc_out<sc_bv<12>> id_inst_imm;
+	sc_out<sc_bv<5>> id_inst_shamt;
+	sc_out<bool> id_imm_mux_sel;
+	sc_out<bool> id_reg_wrt;
+	sc_out<sc_bv<5>> id_inst19_15;
+	sc_out<sc_bv<5>> id_inst24_20;
+	sc_out<sc_bv<5>> id_inst11_7;
 
 	void debug_test(void)
 	{
@@ -50,7 +63,7 @@ SC_MODULE(CPU)
 
 	}
 
-	SC_CTOR(CPU) : pc("program_counter"), main_mem("main_memory"), rf("register_file")
+	SC_CTOR(CPU) : pc("program_counter"), main_mem("main_memory"), rf("register_file") , id("instruction_decoder")
 	{
 		/*bind program counter*/
 		pc.clock(clock);
@@ -77,6 +90,20 @@ SC_MODULE(CPU)
 		rf.reg_data1(rf_reg_data1);
 		rf.reg_data2(rf_reg_data2);
 	
+		/*bind instruction decoder*/	
+		
+		id.clk(clock);
+		id.instruction(id_instruction);
+		id.op2_sel(id_op2_sel);
+		id.alu_ctl(id_alu_ctl);
+		id.inst_imm(id_inst_imm);
+		id.inst_shamt(id_inst_shamt);
+		id.imm_mux_sel(id_imm_mux_sel);
+		id.reg_wrt(id_reg_wrt);
+		id.inst19_15(id_inst19_15);
+		id.inst24_20(id_inst24_20);
+		id.inst11_7(id_inst11_7);
+
 		std::cout << "Cpu constructor" << endl;
 
 		SC_METHOD(debug_test);

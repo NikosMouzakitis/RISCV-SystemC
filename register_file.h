@@ -51,12 +51,13 @@ SC_MODULE(RegisterFile)
 
 	void UpdateRegisterFile(void)
 	{
+		dump_regs();
 		return;
 	}	
 	void dump_regs(void)
 	{
 
-		std::cout << "Printing register file" << endl;
+		std::cout << "Printing register file at[" << sc_time_stamp() << " ns]" << endl;
 		for(int i = 0; i < 32; i++)
 			std::cout << "$" << std::dec << i << " : " << std::hex << *prf[i] << endl;
 	}	
