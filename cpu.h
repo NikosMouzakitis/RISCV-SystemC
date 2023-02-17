@@ -104,6 +104,15 @@ SC_MODULE(CPU)
 		rf.reg_data2(rf_reg_data2);
 
 		std::cout << "Cpu constructor" << endl;
+		sc_trace_file *tf = sc_create_vcd_trace_file("my_db");
+		sc_trace(tf,clock,"Clock");
+		sc_trace(tf,reset_pc,"ResetPC");
+		sc_trace(tf,inc_pc,"IncPC");
+		sc_trace(tf,pc_out_from_pc,"pc_out_from_pc");
+		sc_trace(tf,id_inst19_15,"inst19_16");
+		sc_trace(tf,id_inst11_7,"inst11_7");
+		sc_trace(tf,id_inst24_20,"inst24_20");
+		
 
 		SC_METHOD(debug_test);
 		sensitive << clock.pos() ;

@@ -17,7 +17,7 @@ SC_MODULE(MainMemory) {
   void do_rd() {
     if (rd) {
 	std::cout << "Main Memory read() from address: 0x" << std::hex <<  address << endl;
-      d_out.write(mem[address.read()]);
+	d_out.write(mem[address.read()]);
     }
   }
 

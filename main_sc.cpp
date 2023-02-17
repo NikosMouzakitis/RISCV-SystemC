@@ -95,9 +95,11 @@ int sc_main(int argc, char * argv[])
 	std::cout << "################           Simulation Start           ###################" << endl;
 	std::cout << "##########################################################################" << endl << endl;
 	
+	/*Signal tracing*/	
+	sc_start(60,SC_NS); //start simulation.
 
-
-	sc_start(20,SC_NS); //start simulation.
+	/*end signal tracing*/
+//	sc_close_vcd_trace_file(tf);
 
 	return 0;
 }

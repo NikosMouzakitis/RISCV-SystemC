@@ -14,14 +14,19 @@ SC_MODULE(InstructionDecoder) {
 	sc_out<sc_bv<5>> inst19_15;
 	sc_out<sc_bv<5>> inst24_20;
 	sc_out<sc_bv<5>> inst11_7;
-	
-
 
 	/*decode() creates all the signals necessary to drive the correct operation of the processor. */
 	void decode(void)
 	{
 		uint32_t fetched;
 		uint32_t result;
+		
+
+		/* TO DO *
+		 * First check for what kind is
+		 * the instruction prior to assigning
+		 * signals.*/
+
 		fetched = instruction.read();	
 		std::cout << "InstructionDecoder runs." << endl;	
 		std::cout << "Fetched instruction: " << std::hex << fetched << endl;	
@@ -38,7 +43,10 @@ SC_MODULE(InstructionDecoder) {
 		result = (fetched & 0xf8000) >> 15;	
 		inst19_15.write(result);
 		std::cout << "inst19_15 : " << std::hex << inst19_15 << endl;
+
 		
+
+
 		return;
 	}
 
