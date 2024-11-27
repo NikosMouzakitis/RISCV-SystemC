@@ -2,7 +2,7 @@
 #include <iostream>
 
 /*   A simple RISCV cpu datapath emulation designed using SystemC.
- *   author: Mouzakitis Nikolaos (2023)	*/
+ *   author: Mouzakitis Nikolaos (2024-2025)	*/
 
 using namespace std;
 int sc_main(int argc, char * argv[])
@@ -29,17 +29,9 @@ int sc_main(int argc, char * argv[])
 	sc_signal<uint32_t> init_address_main_mem;
 	sc_signal<uint32_t> init_data_out_main_mem;
 
-	/* register file */
-	sc_signal <sc_bv<5>> init_rf_rs1;	
-	sc_signal <sc_bv<5>> init_rf_rs2;	
-	sc_signal <sc_bv<5>> init_rf_rd;	
-	sc_signal <bool> init_rf_write;
-	sc_signal <uint32_t> init_rf_din;
-	sc_signal<uint32_t> init_rf_reg_data1;
-	sc_signal<uint32_t> init_rf_reg_data2;
-
 	/* instruction decoder */
 	sc_signal<uint32_t> init_id_instruction;
+	init_id_instruction.write(0x0);
 	sc_signal<bool> init_id_op2_sel;
 	sc_signal<sc_bv<10>> init_id_alu_ctl;
 	sc_signal<sc_bv<12>> init_id_inst_imm;
@@ -49,6 +41,16 @@ int sc_main(int argc, char * argv[])
 	sc_signal<sc_bv<5>> init_id_inst19_15;
 	sc_signal<sc_bv<5>> init_id_inst24_20;
 	sc_signal<sc_bv<5>> init_id_inst11_7;
+
+
+	/* register file */
+	sc_signal <sc_bv<5>> init_rf_rs1;	
+	sc_signal <sc_bv<5>> init_rf_rs2;	
+	sc_signal <sc_bv<5>> init_rf_rd;	
+	sc_signal <bool> init_rf_write;
+	sc_signal <uint32_t> init_rf_din;
+	sc_signal<uint32_t> init_rf_reg_data1;
+	sc_signal<uint32_t> init_rf_reg_data2;
 
 	/* universal clock */
 	std::cout << "Set clock period: 10 nanosecods\n" << endl;
@@ -80,7 +82,8 @@ int sc_main(int argc, char * argv[])
 	cpu1.rf_reg_data2(init_rf_reg_data2);
 
 	/*bindings for instruction decoder*/
-	cpu1.id_instruction(init_id_instruction);
+	cpu1.id_instruction(init_data_out_main_mem);
+	//cpu1.id_instruction(init_id_instruction);
 	cpu1.id_op2_sel(init_id_op2_sel);
 	cpu1.id_alu_ctl(init_id_alu_ctl);
 	cpu1.id_inst_imm(init_id_inst_imm);

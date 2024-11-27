@@ -13,12 +13,12 @@ SC_MODULE(CPU)
 	
 	ProgramCounter pc;
 	MainMemory main_mem;	
-	RegisterFile rf;
 	InstructionDecoder id;
+	RegisterFile rf;
 
 	/*  Definition of the inputs for::	
 	*/	
-
+	//clock
 	sc_in_clk clock;
 
 	// program counter

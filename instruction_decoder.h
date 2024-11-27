@@ -33,19 +33,19 @@ SC_MODULE(InstructionDecoder) {
 
 		//creating signal inst11_7	
 		result = (fetched & 0b111110000000) >> 7;	
+		std::cout << "inst11_7 calculated : " << std::hex << result << endl;
 		inst11_7.write(result);
 		std::cout << "inst11_7 : " << std::hex << inst11_7 << endl;
 		//creating signal inst24_20
 		result = (fetched & 0x01f00000) >> 20;
 		inst24_20.write(result);
+		std::cout << "inst24_20 calculated : " << std::hex << result << endl;
 		std::cout << "inst24_20: " << std::hex << inst24_20 << endl;
 		//creation of signal inst19_15
 		result = (fetched & 0xf8000) >> 15;	
 		inst19_15.write(result);
+		std::cout << "inst19_15 calculated : " << std::hex << result << endl;
 		std::cout << "inst19_15 : " << std::hex << inst19_15 << endl;
-
-		
-
 
 		return;
 	}
@@ -54,6 +54,8 @@ SC_MODULE(InstructionDecoder) {
 		
 		SC_METHOD(decode);
 		sensitive << clk.pos();	
+		sensitive << instruction;
+
 		std::cout << "Instruction Decoder initialized" << endl;
 	}
 };

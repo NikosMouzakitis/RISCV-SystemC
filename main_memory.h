@@ -17,6 +17,7 @@ SC_MODULE(MainMemory) {
   void do_rd() {
     if (rd) {
 	std::cout << "Main Memory read() from address: 0x" << std::hex <<  address << endl;
+	std::cout << "Writing on d_out 0x" << std::hex << mem[address.read()] << endl;
 	d_out.write(mem[address.read()]);
     }
   }
@@ -31,13 +32,17 @@ SC_MODULE(MainMemory) {
   {
 	//addi   x11,x0 ,7
 	mem[0x0] = 0x0700593;
+	//addi   x12,x0 ,8
+	mem[0x01] = 0x800613;	
   }
 
   SC_CTOR(MainMemory) {
     SC_METHOD(do_rd);
-    sensitive << clk.pos();
+//    sensitive << clk.pos();
+    sensitive << d_in << rst << rd << wr << address;
     SC_METHOD(do_wr);
-    sensitive << clk.pos();
+    sensitive << d_in << rst << rd << wr << address;
+//    sensitive << clk.pos();
     init_main_mem();
     std::cout << "Main Memory module 0x" << std::hex << MEMORY_SIZE <<" bytes created" << endl;
 
